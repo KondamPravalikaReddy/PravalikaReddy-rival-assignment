@@ -39,8 +39,8 @@ Professional documentation
 Clean, modular code following best practices
 
 Advanced Features: Design Rationale
-Feature 1: Cost Estimation Engine ✅
-Why This Feature?
+# Feature 1: Cost Estimation Engine ✅
+# Why This Feature?
 
 Real-World Relevance: Every SaaS platform must track costs
 
@@ -64,7 +64,7 @@ Memory Costs:
   - 1-10KB:   $0.00005 per request
   - 10KB+:    $0.0001 per request
 Output Structure
-
+```text
 json
 {
   "cost_analysis": {
@@ -84,6 +84,7 @@ json
     "optimization_potential_usd": 3.45
   }
 }
+```
 Key Features
 
 Per-endpoint cost breakdown
@@ -92,8 +93,8 @@ Optimization potential estimation (20% savings from slow endpoint optimization)
 
 Easy to extend with different pricing tiers or usage models
 
-Feature 2: Anomaly Detection ✅
-Why This Feature?
+# Feature 2: Anomaly Detection ✅
+# Why This Feature?
 
 Operational Critical: Detects attacks, outages, and system failures
 
@@ -138,7 +139,7 @@ Identifies resource-heavy users
 Enables fairness enforcement
 
 Output Structure
-
+```text
 json
 {
   "anomalies": [
@@ -165,9 +166,10 @@ json
     }
   ]
 }
+```
 Architecture & Modularity
 Separation of Concerns
-text
+```text
 ┌─────────────────────────────────────┐
 │       function.py (CORE)            │
 │  - analyze_api_logs (main entry)    │
@@ -194,6 +196,7 @@ text
 │  - COST_CONFIG                      │
 │  - ANOMALY_CONFIG                   │
 └─────────────────────────────────────┘
+```
 Benefits of This Structure
 Configurability: Change thresholds without modifying core logic
 
@@ -206,7 +209,7 @@ Extensibility: Add new features by extending function.py
 Reusability: Utilities can be used by other modules
 
 Design Decisions & Trade-offs
-Decision 1: Stateless Processing
+# Decision 1: Stateless Processing
 Chosen: Stateless (pure functions)
 
 Alternative: Maintain state (class-based)
@@ -225,7 +228,7 @@ Trade-off:
 
 Rationale: Serverless functions are inherently stateless. This design aligns with cloud-native principles.
 
-Decision 2: Single-Pass vs. Multi-Pass Analysis
+# Decision 2: Single-Pass vs. Multi-Pass Analysis
 Chosen: Single-pass for most operations (where possible)
 
 Alternative: Sort and reprocess for each feature
@@ -244,7 +247,7 @@ Trade-off:
 
 Rationale: Performance requirement (< 2 seconds for 10,000 logs) demands efficiency.
 
-Decision 3: Strict vs. Loose Input Validation
+# Decision 3: Strict vs. Loose Input Validation
 Chosen: Strict validation with filtering
 
 Alternative: Strict validation with errors
@@ -261,7 +264,7 @@ Trade-off:
 
 Rationale: Production systems should continue operating with degraded data rather than failing completely.
 
-Decision 4: Hardcoded vs. Configurable Thresholds
+# Decision 4: Hardcoded vs. Configurable Thresholds
 Chosen: Configurable thresholds in config.py
 
 Alternative: Hardcoded in function logic
@@ -319,7 +322,7 @@ Process in parallel
 Store intermediate results
 
 Aggregate incrementally
-
+```text
 Complexity Breakdown
 Component	Complexity	Scalable?
 Parsing	O(n)	✅ Parallelizable
@@ -331,7 +334,7 @@ Total	O(n log n)	✅ Good
 Performance Optimization
 Optimization 1: Early Validation
 Filter invalid entries once at start
-
+```
 Avoid re-validating throughout
 
 Saves up to 10% processing time
@@ -349,17 +352,17 @@ Batch similar operations
 Reduces function call overhead
 
 Performance Results
-text
+```text
 Dataset Size | Time | Memory | Logs/sec
 -------------|------|--------|----------
 1,000        | 0.05s| 15MB   | 20,000
 10,000       | 0.3s | 50MB   | 33,000
 100,000      | 2.8s | 200MB  | 35,700
 Conclusion: Well under 2-second requirement even at 10,000 logs.
-
+```
 Testing Strategy
 Test Pyramid
-text
+```text
            ┌─────────┐
            │ E2E (1) │  - Full integration tests
            └─────────┘
@@ -373,6 +376,7 @@ text
     │  - Calculations          │
     │  - Edge cases            │
     └──────────────────────────┘
+```
 Test Categories
 Input Validation (8 tests)
 
@@ -423,20 +427,20 @@ Achieved: 85%+
 
 Key Coverage: Core logic, edge cases, error paths
 
-Challenges & Solutions
-Challenge 1: Timestamp Parsing Across Formats
+# Challenges & Solutions
+# Challenge 1: Timestamp Parsing Across Formats
 Problem: Different systems use different ISO 8601 variants
 
 Solution:
-
+```text
 python
 def parse_timestamp(timestamp_str: str) -> datetime:
     if timestamp_str.endswith('Z'):
         timestamp_str = timestamp_str[:-1] + '+00:00'
     return datetime.fromisoformat(timestamp_str)
 Handles most common formats and provides clear error messages.
-
-Challenge 2: Anomaly Detection Accuracy
+```
+# Challenge 2: Anomaly Detection Accuracy
 Problem: Too strict → false positives; too loose → missing real anomalies
 
 Solution: Multiple detection mechanisms
@@ -449,7 +453,7 @@ User dominance: > 50% of requests (tunable)
 
 Each can be adjusted independently in config.py.
 
-Challenge 3: Cost Model Complexity
+# Challenge 3: Cost Model Complexity
 Problem: How to accurately model serverless costs?
 
 Solution: Used AWS Lambda pricing as reference
@@ -462,7 +466,7 @@ Memory tiers: Small, Medium, Large
 
 Documented assumptions in DESIGN.md and code comments.
 
-Challenge 4: Large Dataset Performance
+# Challenge 4: Large Dataset Performance
 Problem: Must process 10,000+ logs in < 2 seconds
 
 Solution:
@@ -540,7 +544,7 @@ Custom dashboards
 Alert management
 
 Time and Effort Breakdown
-text
+```text
 Planning & Analysis      : 1.0 hours
   - Requirements review
   - Architecture design
@@ -569,7 +573,7 @@ Optimization & Polish    : 1.0 hour
   - Performance tuning
   - Code cleanup
   - Final testing
-
+```
 TOTAL                    : 12 hours
 Breakdown by Evaluation Criteria:
 
@@ -632,3 +636,4 @@ Production Readiness ✅
 
 Conclusion
 This implementation provides a robust, scalable, and production-ready API log analytics solution. The chosen advanced features (Cost Estimation and Anomaly Detection) demonstrate both technical depth and practical value. The architecture supports easy extension and future enhancements while maintaining performance and code quality standards expected in professional development environments.
+
