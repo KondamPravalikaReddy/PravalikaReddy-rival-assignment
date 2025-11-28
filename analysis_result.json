@@ -1,0 +1,144 @@
+{
+  "summary": {
+    "total_requests": 15,
+    "time_range": {
+      "start": "2025-01-15T10:00:00Z",
+      "end": "2025-01-15T10:14:45Z"
+    },
+    "avg_response_time_ms": 787.2,
+    "error_rate_percentage": 20.0
+  },
+  "endpoint_stats": [
+    {
+      "endpoint": "/api/payments",
+      "request_count": 4,
+      "avg_response_time_ms": 912.5,
+      "slowest_request_ms": 1100,
+      "fastest_request_ms": 780,
+      "error_count": 2,
+      "most_common_status": 200
+    },
+    {
+      "endpoint": "/api/reports",
+      "request_count": 3,
+      "avg_response_time_ms": 2100,
+      "slowest_request_ms": 2250,
+      "fastest_request_ms": 1950,
+      "error_count": 0,
+      "most_common_status": 200
+    },
+    {
+      "endpoint": "/api/search",
+      "request_count": 2,
+      "avg_response_time_ms": 485,
+      "slowest_request_ms": 520,
+      "fastest_request_ms": 450,
+      "error_count": 0,
+      "most_common_status": 200
+    },
+    {
+      "endpoint": "/api/users",
+      "request_count": 6,
+      "avg_response_time_ms": 148,
+      "slowest_request_ms": 280,
+      "fastest_request_ms": 98,
+      "error_count": 1,
+      "most_common_status": 200
+    }
+  ],
+  "performance_issues": [
+    {
+      "type": "slow_endpoint",
+      "endpoint": "/api/payments",
+      "avg_response_time_ms": 912.5,
+      "threshold_ms": 500,
+      "severity": "medium"
+    },
+    {
+      "type": "high_error_rate",
+      "endpoint": "/api/payments",
+      "error_rate_percentage": 50.0,
+      "severity": "critical"
+    },
+    {
+      "type": "slow_endpoint",
+      "endpoint": "/api/reports",
+      "avg_response_time_ms": 2100,
+      "threshold_ms": 500,
+      "severity": "critical"
+    },
+    {
+      "type": "high_error_rate",
+      "endpoint": "/api/users",
+      "error_rate_percentage": 16.67,
+      "severity": "critical"
+    }
+  ],
+  "recommendations": [
+    "Investigate /api/payments performance (avg 912.5ms exceeds 500ms threshold)",
+    "CRITICAL: Alert: /api/payments has 50.0% error rate",
+    "Investigate /api/reports performance (avg 2100ms exceeds 500ms threshold)",
+    "CRITICAL: Alert: /api/users has 16.67% error rate"
+  ],
+  "hourly_distribution": {
+    "10:00": 15
+  },
+  "top_users_by_requests": [
+    {
+      "user_id": "user_001",
+      "request_count": 5
+    },
+    {
+      "user_id": "user_002",
+      "request_count": 5
+    },
+    {
+      "user_id": "user_003",
+      "request_count": 3
+    },
+    {
+      "user_id": "user_004",
+      "request_count": 2
+    }
+  ],
+  "cost_analysis": {
+    "total_cost_usd": 0.03,
+    "cost_breakdown": {
+      "request_costs": 0.0,
+      "execution_costs": 0.02,
+      "memory_costs": 0.0
+    },
+    "cost_by_endpoint": [
+      {
+        "endpoint": "/api/payments",
+        "total_cost": 0.01,
+        "cost_per_request": 0.0
+      },
+      {
+        "endpoint": "/api/reports",
+        "total_cost": 0.01,
+        "cost_per_request": 0.0
+      },
+      {
+        "endpoint": "/api/search",
+        "total_cost": 0.0,
+        "cost_per_request": 0.0
+      },
+      {
+        "endpoint": "/api/users",
+        "total_cost": 0.0,
+        "cost_per_request": 0.0
+      }
+    ],
+    "optimization_potential_usd": 0.0
+  },
+  "anomalies": [],
+  "caching_opportunities": {
+    "caching_opportunities": [],
+    "total_potential_savings": {
+      "requests_eliminated": 0,
+      "cost_savings_usd": 0,
+      "performance_improvement_ms": 0
+    }
+  }
+}
